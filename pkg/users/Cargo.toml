@@ -1,0 +1,21 @@
+[package]
+name = "users"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "users"
+path = "users.rs"
+
+[dependencies]
+anyhow.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+tokio.workspace = true
+parking_lot.workspace = true
+jwt = "0.16.0" #token
+hmac = "0.12.1"
+sha2 = "0.10.8"
+
+database.workspace = true

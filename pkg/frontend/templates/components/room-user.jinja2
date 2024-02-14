@@ -1,0 +1,12 @@
+{% for user in roomUsers %}
+<div  class="text-sm font-medium text-gray-900 truncate dark:text-white p-4 flex flex-row justify-between items-center">
+  <p>
+    {{ user.name }}
+  </p>
+  {% if loop.length > 1 %}
+    <svg hx-post="/htmx/room/{{ roomid }}/remove/{{ user.id }}" hx-target="#room-users" class="w-8 h-8 text-gray-800 dark:text-white cursor-pointer hover:bg-gray-100 rounded-lg p-2 dark:hover:bg-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
+    </svg>
+  {% endif %}
+</div>
+{% endfor %}

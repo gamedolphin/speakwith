@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <title>Speak With</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/debug.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/remove-me.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>    
+    <link href="{{BASE_ROUTE}}/assets/output.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">    
+  </head>  
+  <body class="bg-gray-50 dark:bg-gray-900 h-screen" hx-ext="response-targets,remove-me,sse,debug,chunked-transfer">
+    <div id="content" class="flex flex-1 w-full h-full">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>

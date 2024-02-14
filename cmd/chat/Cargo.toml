@@ -1,0 +1,16 @@
+[package]
+name = "chat"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio.workspace = true
+axum.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+clap = { version = "4.5.0", features = ["derive", "env"] }
+
+# chat.workspace = true
+frontend.workspace = true
+database.workspace = true

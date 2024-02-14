@@ -1,0 +1,10 @@
+<div class="flex h-full w-full flex-row items-stretch overflow-hidden" x-data="{
+                                                                               currentChat: $persist('general'),
+                                                                               get currentPath() { return '/chatroom/'+this.currentChat; }
+                                                                               }">
+  {% include 'components/sidebar.jinja2' %}
+  <div id="current" class="flex flex-col flex-1">
+    {% block current %}
+    {% endblock %}
+  </div>
+</div>

@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  CARGO_TERM_COLOR: always
+  DATABASE_URL: sqlite://db.sqlite
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    - run: rustup toolchain install nightly --profile minimal
+    - uses: Swatinem/rust-cache@v2
+    - name: sqlx
+      run: cargo install sqlx-cli --no-default-features --features sqlite
+    - name: setup db
+      run: sqlx database setup --source ./pkg/database/migrations/
+    - name: Build
+      run: cargo build --release
+    - name: Run tests
+      run: cargo test --verbose
+    - uses: actions/upload-artifact@v4
+      with:
+        name: speakwith
+        path: ./target/chat

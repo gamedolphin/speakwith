@@ -1,0 +1,43 @@
+[package]
+name = "frontend"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "frontend"
+path = "frontend.rs"
+
+[dependencies]
+tracing.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+axum.workspace = true
+tokio.workspace = true
+parking_lot.workspace = true
+serde.workspace = true
+xid.workspace = true
+tower.workspace = true
+rust-embed = "8.2.0"
+mime_guess = "2.0.4"
+minijinja = { version = "1.0.10", features = ["loader"] }
+axum-htmx = { version = "0.5.0", features = ["serde"] }
+axum-extra = { version = "0.9.1", features = ["cookie", "typed-header", "form"] }
+minijinja-contrib = { version = "1.0.11", features = ["datetime"] }
+time = "0"
+tower-http = { version = "0.5.1", features = ["fs"] }
+futures = "0"
+tokio-stream = { version = "0.1.14", features = ["sync"] }
+tokio-util = "0.7.10"
+pin-project = "1"
+notify = "6"
+rand = "0.8.5"
+convert_case = "0.6.0"
+
+database.workspace = true
+users.workspace = true
+rooms.workspace = true
+uploads.workspace = true
+
+# [build-dependencies]
+# anyhow.workspace = true

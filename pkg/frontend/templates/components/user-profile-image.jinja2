@@ -1,0 +1,4 @@
+<img class="w-{{ size }} h-{{ size }} rounded-full object-center object-cover {{ extraClasses }}" src="/uploads/{{ image }}" alt="Rounded avatar"
+     {% for (key,value) in extras %}
+       {{ key }}="{{ value }}"
+     {% endfor %}/>

@@ -1,0 +1,13 @@
+{% for user in results %}
+  <div
+    class="flex flex-row gap-1 bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500 cursor-pointer"
+    {% if local %}
+      @click.prevent="selected = { ...selected, {{ user.id }}: '{{ user.username }}'}"
+    {% else %}
+      hx-post="/htmx/room/{{ roomid }}/add/{{ user.id }}" hx-target="#room-users"
+    {% endif %}
+    >
+    <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+    <p>{{ user.username }}</p>
+  </div>
+{% endfor %}

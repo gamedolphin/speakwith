@@ -1,0 +1,66 @@
+<div x-show="modelOpen" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-end justify-center min-h-screen px-4 text-center md:items-center sm:block sm:p-0">
+    <div x-cloak @click.prevent="modelOpen = false" x-show="modelOpen"
+         x-transition:enter="transition ease-out duration-300 transform"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200 transform"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-40" aria-hidden="true"
+         >
+    </div>
+
+    <div x-cloak x-show="modelOpen"
+         x-transition:enter="transition ease-out duration-300 transform"
+         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+         x-transition:leave="transition ease-in duration-200 transform"
+         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+         class="inline-block w-full max-w-xl my-20 overflow-hidden text-left transition-all transform bg-white dark:bg-gray-900 rounded-lg shadow-xl 2xl:max-w-2xl"
+         >
+         <div class="py-4 px-4 mx-auto max-w-2xl">
+           <div class="flex flex-row justify-between items-center">
+             <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">User List</h2>
+             <button @click.prevent="modelOpen = false" class="text-gray-600 focus:outline-none hover:text-gray-700">
+               <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+               </svg>
+             </button>
+           </div>
+           <div x-data="{ selected: {}, get hasElements() { return Object.keys(this.selected) !== 0; } }" hx-include=".extra-for-rooms">
+             <div class="w-full flex relative">
+               <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                 </svg>
+               </div>
+
+               {% with inputType = "text", id = "name", placeholder = "someone", extraClasses = "pl-12", htmxpairs = [("hx-get","/htmx/search-user"),("hx-trigger", "input changed delay:500ms"), ("autocomplete","off"), ("role", "presentation"), ("hx-target", "#search-results")] %}
+                 {% include 'components/text-input.jinja2' %}
+               {% endwith %}
+               <input class="hidden extra-for-rooms" name="local" value="true"></input>
+             </div>
+             <div id="search-results" class="mt-2 flex flex-row flex-wrap gap-2">
+               {% include 'components/user-search-results.jinja2' %}
+             </div>
+             <form class="flex flex-col gap-2 py-2" hx-post="/htmx/create-user-room">
+               <template x-for="(name, index) in selected">
+                 <div class="flex flex-row p-2 rounded-lg border border-gray-100 dark:border-gray-600 justify-between">
+                   <span x-text="name"></span>
+                   <svg @click.prevent="delete selected[index]" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
+                   </svg>
+                   <input x-bind:value="index" name="user" class="hidden"></input>
+                 </div>
+               </template>
+               <button x-show="hasElements" type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                 Start
+               </button>
+             </form>
+           </div>
+         </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+[workspace]
+resolver = "2"
+
+members = [
+  "cmd/*",
+  "pkg/*"
+]
+
+[workspace.dependencies]
+parking_lot = "0"
+tracing = "0"
+tracing-subscriber = "0"
+anyhow = "1"
+thiserror = "1"
+tower = "0.4.13"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+axum = { version = "0.7" , features = ["json", "macros", "multipart"] }
+tokio = { version = "1", features = ["full"] }
+xid = "1"
+frontend = { path = "./pkg/frontend" }
+database = { path = "./pkg/database" }
+users = { path = "./pkg/users" }
+rooms = { path = "./pkg/rooms" }
+uploads = { path = "./pkg/uploads" }

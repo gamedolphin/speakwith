@@ -1,0 +1,78 @@
+<section class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+  <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+    <img class="w-8 h-8 mr-2" src="/assets/logo.svg" alt="logo">
+    SpeakWith
+  </a>
+  <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">Register</h1>
+      <form class="space-y-4 md:space-y-6 flex flex-col items-stretch justify-start" hx-post="/htmx/register" hx-encoding='multipart/form-data'>
+        <div class="self-center" x-data="previewImage()">
+          <label for="image">
+            <div class="w-24 h-24 rounded bg-gray-100 border border-slate-200 flex items-center justify-center overflow-hidden rounded-full  cursor-pointer">
+              <img x-show="imageUrl" :src="imageUrl" class="w-full object-cover">
+              <div x-show="!imageUrl" class="text-gray-300 flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 " fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+              </div>
+              <input class="hidden w-full cursor-pointer" accept="image/png, image/gif, image/jpeg"
+                     type="file" name="image" id="image" @change="fileChosen">
+            </div>
+          </label>
+        </div>
+        <div>
+          <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+          {% with inputType = "text", id = "name", placeholder = "First Last" %}
+            {% include 'components/text-input.jinja2' %}
+          {% endwith %}
+        </div>
+        <div>
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+          {% with inputType = "email", id = "email", placeholder = "you@here.com" %}
+            {% include 'components/text-input.jinja2' %}
+          {% endwith %}
+        </div>
+        <div>
+          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+          {% with inputType = "password", id = "password", placeholder = "••••••••" %}
+            {% include 'components/text-input.jinja2' %}
+          {% endwith %}
+        </div>
+        <div>
+          <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
+          {% with inputType = "password", id = "confirm", placeholder = "••••••••" %}
+            {% include 'components/text-input.jinja2' %}
+          {% endwith %}
+        </div>
+        {% with label = "Create an account" %}
+          {% include 'components/button.jinja2' %}
+        {% endwith %}
+        <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+          Already have an account? <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+        </p>
+      </form>
+    </div>
+  </div>
+  <script>
+    function previewImage() {
+    return {
+    imageUrl: "",
+
+    fileChosen(event) {
+    this.fileToDataUrl(event, (src) => (this.imageUrl = src));
+    },
+
+    fileToDataUrl(event, callback) {
+    if (!event.target.files.length) return;
+
+    let file = event.target.files[0],
+    reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = (e) => callback(e.target.result);
+    },
+    };
+    }
+  </script>
+</section>

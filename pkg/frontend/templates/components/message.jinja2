@@ -1,0 +1,18 @@
+<div class="flex items-start gap-2.5" x-data="{ created_at: '{{ message.created_at | datetimeformat(format="iso") }}', get timestamp() { return dayjs(this.created_at).format('HH:mm'); }}">
+  <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 group">
+    {% if message.user_image %}
+      {% with image = message.user_image, size= 10 %}
+        {% include 'components/user-profile-image.jinja2' %}
+      {% endwith %}      
+    {% else %}
+      <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+    {% endif %}
+  </div>
+  <div class="flex flex-col w-full leading-1.5">
+    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+      <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ message.user_name }}</span>
+      <span class="text-sm font-normal text-gray-500 dark:text-gray-400" x-text="timestamp"></span>
+    </div>
+    <p class="text-sm font-normal py-2 text-gray-900 dark:text-white">{{ message.message }}</p>
+  </div>
+</div>

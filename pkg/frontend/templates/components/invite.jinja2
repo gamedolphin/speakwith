@@ -1,0 +1,11 @@
+<div class="flex flex-row justify-between items-center p-4 bg-white border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl dark:bg-gray-700 dark:border-gray-600 gap-4" id="invite-url">
+  <p class="font-mono text-gray-500 dark:text-gray-400">localhost:3000/register/{{ register_id }}</p>
+  <div class="flex items-center flex-shrink-0 gap-2">
+    <button @click="navigator.clipboard.writeText('localhost:3000/register/{{ register_id }}')" class="px-5 py-2 me-2 text-xs font-medium text-white bg-slate-700 rounded-lg hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800">
+      Copy
+    </button>
+    <button class="px-5 py-2 me-2 text-xs font-medium text-white bg-slate-700 rounded-lg hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800" hx-target="#invite-url" hx-post="/htmx/reset-register-link" hx-swap="outerHTML">
+      Reset
+    </button>
+  </div>
+</div>

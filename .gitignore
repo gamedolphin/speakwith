@@ -1,0 +1,4 @@
+db.sqlite*
+uploads/
+/build/
+data/

@@ -1,0 +1,33 @@
+<div class="flex flex-row justify-between items-center py-4">
+  <div class="flex-shrink-0 px-4">
+    {% if item.user_image %}
+      <img class="w-8 h-8 rounded-full" src="{{item.user_image | replace("./", "/") }}">
+    {% else %}
+      <svg class="w-8 h-8 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+    {% endif %}
+  </div>
+  <div class="flex-1 min-w-0">
+    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+      {{ item.username }}
+    </p>
+    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+      {{ item.email }}
+    </p>
+  </div>
+  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+    {% if user.id != item.id %}
+      <div class="flex items-center flex-shrink-0 gap-2">
+        {% if item.is_enabled %}
+          {% with is_admin = item.is_admin, userid = item.id %}
+            {% include 'components/user-buttons-enabled.jinja2' %}
+          {% endwith %}
+        {% else %}
+          {% with userid = item.id %}
+            {% include 'components/user-buttons-disabled.jinja2' %}
+          {% endwith %}
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+</div>

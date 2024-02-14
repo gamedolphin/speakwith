@@ -1,0 +1,4 @@
+{% extends 'components/layout.jinja2' %}
+{% block current %}
+  <div x-bind:hx-get="currentPath" hx-replace-url="true" hx-target="#current" hx-trigger="load">Loading</div>
+{% endblock %}

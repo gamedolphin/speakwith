@@ -1,0 +1,13 @@
+{% with currentRoom  = { 'id': 'users', 'description': 'Manage users' } %}
+  {% include 'components/title.jinja2' %}
+{% endwith %}
+<div class="p-4 flex flex-col w-full overflow-auto">
+  <div class="flex flex-col mx-auto gap-4">
+    {% include 'components/invite.jinja2' %}
+    <div class="flex flex-col bg-white border border-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-500">
+      {% for item in userlist %}
+        {% include 'components/user-item.jinja2' %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

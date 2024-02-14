@@ -1,0 +1,18 @@
+{% include 'components/title.jinja2' %}
+<div class="px-4 flex flex-1 overflow-hidden"
+     hx-ext='sse'
+     sse-connect='/htmx/room/{{ currentRoom.id }}'
+     sse-swap='IncomingMessage'
+     hx-swap='afterbegin'
+     hx-on::after-settle="this.scrollTo(0, this.scrollHeight);"
+     hx-trigger='load'
+     hx-target='#message-list'>
+     <div class="flex w-full flex-col-reverse gap-4 overflow-auto py-4" id="message-list">
+       {% include 'components/message-list.jinja2' %}
+     </div>
+</div>
+
+<div class="">
+  {% include 'components/sendmessageform.jinja2' %}
+</div>
+<div x-init="currentChat = '{{ roomid }}'">

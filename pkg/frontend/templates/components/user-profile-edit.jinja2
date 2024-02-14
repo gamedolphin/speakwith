@@ -1,0 +1,25 @@
+<form class="p-4" hx-post="/htmx/user/update/profile" hx-swap="outerHTML">
+  <div class="grid gap-4 mb-4 sm:gap-6 sm:mb-5">
+    <div class="sm:col-span-2">
+      <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+      {% with name="name", placeholder="First Last", htmxpairs = [("value", username)] %}
+        {% include 'components/text-input.jinja2' %}
+      {% endwith %}
+    </div>
+    <div class="sm:col-span-2">
+      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+      {% with name="email", placeholder="you@somewhere.com", htmxpairs = [("value", email), ("disabled", "true")] %}
+        {% include 'components/text-input.jinja2' %}
+      {% endwith %}
+    </div>
+    <div class="sm:col-span-2">
+      <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bio</label>
+      <textarea id="description" name="bio" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Something about yourself">{% if bio %}{{ bio }}{% endif %}</textarea>
+    </div>
+  </div>
+  <div class="flex items-center space-x-4">
+    {% with label = "Update" %}
+      {% include 'components/button.jinja2' %}
+    {% endwith %}
+  </div>
+</form>

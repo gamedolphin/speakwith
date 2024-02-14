@@ -1,0 +1,18 @@
+<li id="{{ room.id }}"
+    hx-boost="true"
+    hx-get="/chatroom/{{ room.id }}"
+    hx-target="#current"
+    hx-push-url="/chatroom/{{room.id}}"
+    class="flex flex-row items-center py-1 px-2 text-sm text-left whitespace-nowrap text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
+  {% if room.is_private %}
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+    </svg>
+  {% else %}
+    <span class="w-4"></span>
+  {% endif %}
+  <span class="flex-1 ml-2"># {{ room.name }}</span>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 invisible group-hover:visible">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+  </svg>
+</li>

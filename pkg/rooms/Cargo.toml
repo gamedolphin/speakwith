@@ -1,0 +1,19 @@
+[package]
+name = "rooms"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "rooms"
+path = "rooms.rs"
+
+[dependencies]
+anyhow.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+tokio.workspace = true
+parking_lot.workspace = true
+
+database.workspace = true
+time = "0"

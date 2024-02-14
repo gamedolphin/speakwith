@@ -1,0 +1,21 @@
+[package]
+name = "database"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "database"
+path = "database.rs"
+
+[dependencies]
+anyhow.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+tokio.workspace = true
+parking_lot.workspace = true
+xid.workspace = true
+sqlx = { version = "0.7", features = [ "runtime-tokio", "sqlite", "macros", "migrate", "time" ] }
+time = "0"
+rand_core = {version = "0.6.4", features=["getrandom"] }
+argon2 = {version = "0.5.2"}

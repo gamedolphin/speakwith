@@ -1,0 +1,51 @@
+{% with currentRoom  = { 'id': 'profile', 'name': 'Settings', 'description': 'Your profile' } %}
+  {% include 'components/title.jinja2' %}
+{% endwith %}
+<section class="bg-white dark:bg-gray-900 overflow-auto">
+  <div class="max-w-xl p-4 mx-auto flex flex-col gap-4 divide-y divide-gray-500">
+    <form class="flex flex-row justify-between items-center">
+      <div class="p-4">
+        {% with image = user.image %}
+          {% include 'components/user-profile-image-edit.jinja2' %}
+        {% endwith %}
+      </div>
+      <button type="button" class="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" @click="Cookies.remove('token'); location.reload();">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+        </svg>
+        Logout
+      </button>
+    </form>
+    {% with username = user.username, email = user.email, bio = user.bio %}
+      {% include 'components/user-profile-edit.jinja2' %}
+    {% endwith %}
+    <form class="p-4" hx-post="/htmx/user/update/password" hx-swap="none" hx-on::after-request=" if(event.detail.successful) this.reset()">
+      <div class="grid gap-4 mb-4 sm:gap-6 sm:mb-5">
+        <div class="sm:col-span-2">
+          <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Password</label>
+          {% with name="current", placeholder="****", inputType = "password" %}
+            {% include 'components/text-input.jinja2' %}
+          {% endwith %}
+        </div>
+        <div class="sm:col-span-2">
+          <label for="update" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
+          {% with name="update", placeholder="****", inputType = "password" %}
+            {% include 'components/text-input.jinja2' %}
+          {% endwith %}
+        </div>
+        <div class="sm:col-span-2">
+          <label for="retype" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Retype Password</label>
+          {% with name="retype", placeholder="****", inputType = "password" %}
+            {% include 'components/text-input.jinja2' %}
+          {% endwith %}
+        </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        {% with label = "Update Password" %}
+          {% include 'components/button.jinja2' %}
+        {% endwith %}
+      </div>
+    </form>
+  </div>
+  <script src=" https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js "></script>
+</section>
