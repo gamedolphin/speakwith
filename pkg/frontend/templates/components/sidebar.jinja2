@@ -1,4 +1,12 @@
-<aside id="default-sidebar" class="z-40 w-80 h-screen flex flex-col" aria-label="Sidenav">
+<div x-data="{ isOpen: true }">
+    <div x-show="!isOpen" @click="isOpen = true" class="w-10 h-screen flex items-center justify-center cursor-pointer bg-gray-200 dark:bg-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+    </div>
+
+  <aside id="default-sidebar" x-show="isOpen" x-transition class="z-40 w-80 h-screen flex flex-col bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidenav">
+
   <div class="overflow-y-auto py-5 px-3 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex-1">
     <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white justify-center">
       <img class="w-8 h-8 mr-2" src="/assets/logo.svg" alt="logo">
@@ -58,12 +66,17 @@
     {% if user.image %}
       {% with image = user.image, size = 10, extraClasses = "cursor-pointer hover:ring-2 ring-gray-300 dark:ring-gray-500", extras = [("hx-get", "/profile"), ("hx-target", "#current"), ("hx-push-url", "true") ] %}
         {% include 'components/user-profile-image.jinja2' %}
-      {% endwith %}      
+      {% endwith %}
     {% else %}
       <a href="#" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600" hx-get="/profile" hx-target="#current" hx-push-url="true">
         {% include 'icons/settings.jinja2' %}
       </a>
     {% endif %}
-
+    <button @click="isOpen = !isOpen" class="p-2 text-gray-500 hover:text-gray-900 dark:hover:text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+    </button>
   </div>
 </aside>
+</div>
