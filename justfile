@@ -1,3 +1,5 @@
+init-db:
+    mkdir -p data & sqlx database setup --source ./pkg/database/migrations/
 watch-tw:
     cd pkg/frontend && tailwindcss -w -i ./templates/input.css -o ./assets/output.css
 
