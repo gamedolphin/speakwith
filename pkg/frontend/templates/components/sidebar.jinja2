@@ -1,78 +1,78 @@
 <div x-data="{ isOpen: true }">
-    <div x-show="!isOpen" @click="isOpen = true" class="w-10 h-screen flex items-center justify-center cursor-pointer bg-gray-200 dark:bg-gray-700">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-    </div>
+  <div x-show="!isOpen" @click="isOpen = true" class="w-10 h-screen flex items-center justify-center cursor-pointer bg-gray-200 dark:bg-gray-700">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+  </div>
 
   <aside id="default-sidebar" x-show="isOpen" x-transition class="z-40 w-80 h-screen flex flex-col bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidenav">
 
-  <div class="overflow-y-auto py-5 px-3 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex-1">
-    <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white justify-center">
-      <img class="w-8 h-8 mr-2" src="/assets/logo.svg" alt="logo">
-      SpeakWith
-    </a>
-    <ul class="space-y-2">
-      <li>
-        <details open x-data="{ modelOpen: false }" class="relative">
-          <summary type="button" class="flex items-center p-1 w-full text-sm font-normal text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
-            </svg>
-            <span class="flex-1 ml-3 text-sm text-left whitespace-nowrap">Channels</span>
-            <div class="hover:bg-slate-400 rounded-lg invisible group-hover:visible" @click.prevent="modelOpen =!modelOpen">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-              </svg>
-            </div>
-            <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            {% include 'components/add-room.jinja2' %}
-          </summary>
-          <ul class="py-1 space-y-1 ">
-            {% for room in rooms %}
-              {% include 'components/room-name.jinja2' %}
-            {% endfor %}
-          </ul>
-        </details>
-      </li>
-      <li>
-        <details open x-data="{ modelOpen: false }" class="relative">
-          <summary type="button" class="flex items-center p-1 w-full text-sm font-normal text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
-            <svg aria-hidden="true" class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
-            <span class="flex-1 ml-3 text-sm text-left whitespace-nowrap">Users</span>
-            <div class="hover:bg-slate-400 rounded-lg invisible group-hover:visible" @click.prevent="modelOpen =!modelOpen">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-              </svg>
-            </div>
-            <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            {% include 'components/user-selection.jinja2' %}
-          </summary>
-          <ul id="dropdown-pages" class="py-1 space-y-1">
-            {% for room in user_rooms %}
-              {% include 'components/user-rooms-name.jinja2' %}
-            {% endfor %}
-          </ul>
-        </details>
-      </li>
-    </ul>
-  </div>
-  <div class="bottom-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20 border-r border-gray-200 dark:border-gray-700" >
-    {% if user.is_admin %}
-      <a href="#" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600" hx-get="/users" hx-target="#current" hx-push-url="true">
-        {% include 'icons/levers.jinja2' %}
+    <div class="overflow-y-auto py-5 px-3 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex-1">
+      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white justify-center">
+        <img class="w-8 h-8 mr-2" src="/assets/logo.svg" alt="logo">
+        SpeakWith
       </a>
-    {% endif %}
-    <div hx-get="/profile" hx-target="#current" hx-push-url="true">
-      {% with image = user.image, username = user.username %}
-        {% include 'components/user-profile-image.jinja2' %}
-      {% endwith %}
+      <ul class="space-y-2">
+        <li>
+          <details open x-data="{ modelOpen: false }" class="relative">
+            <summary type="button" class="flex items-center p-1 w-full text-sm font-normal text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
+              </svg>
+              <span class="flex-1 ml-3 text-sm text-left whitespace-nowrap">Channels</span>
+              <div class="hover:bg-slate-400 rounded-lg invisible group-hover:visible" @click.prevent="modelOpen =!modelOpen">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </div>
+              <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              {% include 'components/add-room.jinja2' %}
+            </summary>
+            <ul class="py-1 space-y-1 ">
+              {% for room in rooms %}
+                {% include 'components/room-name.jinja2' %}
+              {% endfor %}
+            </ul>
+          </details>
+        </li>
+        <li>
+          <details open x-data="{ modelOpen: false }" class="relative">
+            <summary type="button" class="flex items-center p-1 w-full text-sm font-normal text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
+              <svg aria-hidden="true" class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
+              <span class="flex-1 ml-3 text-sm text-left whitespace-nowrap">Users</span>
+              <div class="hover:bg-slate-400 rounded-lg invisible group-hover:visible" @click.prevent="modelOpen =!modelOpen">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </div>
+              <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              {% include 'components/user-selection.jinja2' %}
+            </summary>
+            <ul id="dropdown-pages" class="py-1 space-y-1">
+              {% for room in user_rooms %}
+                {% include 'components/user-rooms-name.jinja2' %}
+              {% endfor %}
+            </ul>
+          </details>
+        </li>
+      </ul>
     </div>
-    <button @click="isOpen = !isOpen" class="p-2 text-gray-500 hover:text-gray-900 dark:hover:text-white">
+    <div class="bottom-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20 border-r border-gray-200 dark:border-gray-700" >
+      {% if user.is_admin %}
+        <a href="#" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600" hx-get="/users" hx-target="#current" hx-push-url="true">
+          {% include 'icons/levers.jinja2' %}
+        </a>
+      {% endif %}
+      <div hx-get="/profile" hx-target="#current" hx-push-url="true" class="rounded-full cursor-pointer hover:ring-2 hover:ring-gray-300 hover:dark:ring-gray-500">
+        {% with image = user.image, username = user.username %}
+          {% include 'components/user-profile-image.jinja2' %}
+        {% endwith %}
+      </div>
+      <button @click="isOpen = !isOpen" class="p-2 text-gray-500 hover:text-gray-900 dark:hover:text-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
         </svg>
-    </button>
-  </div>
-</aside>
+      </button>
+    </div>
+  </aside>
 </div>
