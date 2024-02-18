@@ -63,15 +63,11 @@
         {% include 'icons/levers.jinja2' %}
       </a>
     {% endif %}
-    {% if user.image %}
-      {% with image = user.image, size = 10, extraClasses = "cursor-pointer hover:ring-2 ring-gray-300 dark:ring-gray-500", extras = [("hx-get", "/profile"), ("hx-target", "#current"), ("hx-push-url", "true") ] %}
+    <div hx-get="/profile" hx-target="#current" hx-push-url="true">
+      {% with image = user.image, username = user.username %}
         {% include 'components/user-profile-image.jinja2' %}
       {% endwith %}
-    {% else %}
-      <a href="#" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600" hx-get="/profile" hx-target="#current" hx-push-url="true">
-        {% include 'icons/settings.jinja2' %}
-      </a>
-    {% endif %}
+    </div>
     <button @click="isOpen = !isOpen" class="p-2 text-gray-500 hover:text-gray-900 dark:hover:text-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />

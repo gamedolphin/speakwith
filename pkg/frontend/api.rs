@@ -486,7 +486,7 @@ async fn handle_delete_user_image(
 
     let output = state.templates.render_template(
         "components/user-profile-image-edit.jinja2",
-        context! { image => None::<String> },
+        context! { image => None::<String>, username => user.username, oob => true },
     )?;
 
     Ok(Html(output))
@@ -553,7 +553,7 @@ async fn handle_update_user_image(
 
     let output = state.templates.render_template(
         "components/user-profile-image-edit.jinja2",
-        context! { image => file_url },
+        context! { image => file_url, username => user.username, oob => true },
     )?;
 
     trx.commit()
