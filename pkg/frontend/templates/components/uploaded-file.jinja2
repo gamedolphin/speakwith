@@ -1,0 +1,11 @@
+<div class="relative">
+  {% include 'components/upload-show.jinja2' %}
+  <div class="absolute right-1 top-1 bg-red-500 hover:bg-red-300 rounded-lg p-2 cursor-pointer">
+    {% with size = 3 %}
+      {% include 'icons/delete.jinja2' %}
+    {% endwith %}
+  </div>
+</div>
+<div hx-swap-oob="beforeend:#upload-input">
+  <input hidden name="uploads" value="{{ upload_id }}"/>
+</div>

@@ -1,0 +1,5 @@
+{% if file_type == 'image' %}
+  <img class="h-20 w-20 object-center object-cover rounded-lg" src="/uploads/{{ path }}" alt="uploaded image">
+{% else %}
+  <img class="h-20 w-20 object-center object-cover rounded-lg" src="/assets/logo.svg" alt="uploaded file">
+{% endif %}  

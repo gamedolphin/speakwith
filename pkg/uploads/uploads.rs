@@ -8,7 +8,7 @@ pub async fn upload_file<B, E>(
     base_path: &str,
     id: Option<String>,
     file_name: &str,
-) -> Result<String>
+) -> Result<(String, String)>
 where
     B: Buf,
     E: Into<std::io::Error>,
@@ -16,6 +16,8 @@ where
     let id = id.unwrap_or_else(|| xid::new().to_string());
 
     let file_path = format!("{}-{}", id, file_name);
+    let guess = mime_guess::from_path(file_name);
+    let file_type = guess.first_or_octet_stream().type_().to_string();
     let path = std::path::Path::new(base_path).join(&file_path);
 
     let mut file = BufWriter::new(File::create(&path).await?);
@@ -26,5 +28,5 @@ where
 
     tokio::io::copy(&mut body_reader, &mut file).await?;
 
-    Ok(file_path)
+    Ok((file_path, file_type))
 }

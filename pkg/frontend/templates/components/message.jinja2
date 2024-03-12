@@ -7,6 +7,15 @@
       <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ message.user_name }}</span>
       <span class="text-sm font-normal text-gray-500 dark:text-gray-400" x-text="timestamp"></span>
     </div>
-    <p class="text-sm font-normal py-2 text-gray-900 dark:text-white">{{ message.message }}</p>
+    <div class="flex flex-col">
+      {% if message.uploads %}
+        <div class="grid grid-cols-4 gap-4">
+          {% for val in message.uploads | split %}
+            <img class="h-20 w-20 object-center object-cover rounded-lg" src="/uploads/{{ val }}" alt="uploaded image">
+          {% endfor %}
+        </div>
+      {% endif %}
+      <p class="text-sm font-normal py-2 text-gray-900 dark:text-white">{{ message.message }}</p>
+    </div>
   </div>
 </div>

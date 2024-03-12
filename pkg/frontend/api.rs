@@ -46,6 +46,7 @@ pub fn setup_api(state: Arc<FrontendState>) -> Router {
         .route("/users/:userid/enabled", post(handle_enable_user))
         .route("/users/:userid/admin", post(handle_user_admin))
         .route("/room/:roomid", get(handle_join_room))
+        .route("/room/:roomid/upload", post(handle_upload_to_room))
         .route("/room/:roomid/send", post(handle_send_message))
         .route("/room/:roomid/more", get(handle_pagination))
         .route("/room/:roomid/add/:userid", post(handle_add_user_to_room))
@@ -312,9 +313,10 @@ async fn handle_join_room(
         .into_response())
 }
 
-#[derive(serde::Deserialize)]
+#[derive(serde::Deserialize, Default)]
 pub struct MessageForm {
     pub msg: String,
+    pub uploads: Option<Vec<String>>,
 }
 
 #[debug_handler]
@@ -322,15 +324,24 @@ async fn handle_send_message(
     jar: CookieJar,
     Path(roomid): Path<String>,
     State(state): State<Arc<FrontendState>>,
-    Form(form): Form<MessageForm>,
+    axum_extra::extract::Form(form): axum_extra::extract::Form<MessageForm>,
 ) -> Result<impl IntoResponse, FrontendError> {
     let Some(user) = extract_user(jar, &state.db, &state.secret).await else {
         return Err(FrontendError::Unauthorized);
     };
 
+    tracing::info!("uploads: {:?}", form.uploads);
+
     state
         .room_manager
-        .send_message(&roomid, &user.id, &user.username, user.image, &form.msg)
+        .send_message(
+            &roomid,
+            &user.id,
+            &user.username,
+            user.image,
+            &form.msg,
+            form.uploads.unwrap_or_default(),
+        )
         .await
         .map_err(FrontendError::InternalError)?;
 
@@ -493,6 +504,76 @@ async fn handle_delete_user_image(
 }
 
 #[debug_handler]
+async fn handle_upload_to_room(
+    jar: CookieJar,
+    Path(roomid): Path<String>,
+    State(state): State<Arc<FrontendState>>,
+    mut multipart: Multipart,
+) -> Result<impl IntoResponse, FrontendError> {
+    let Some(user) = extract_user(jar, &state.db, &state.secret).await else {
+        return Err(FrontendError::Unauthorized);
+    };
+
+    let Ok(Some(field)) = multipart.next_field().await else {
+        return Err(FrontendError::InvalidForm(
+            "missing field name: {:?}".into(),
+        ));
+    };
+
+    let name = field
+        .name()
+        .ok_or_else(|| FrontendError::InvalidForm(format!("missing field name: {:?}", field)))?;
+
+    if name != "file" {
+        return Err(FrontendError::InvalidForm(format!(
+            "missing field name: {:?}",
+            field
+        )));
+    }
+
+    let file_name = field
+        .file_name()
+        .ok_or_else(|| {
+            FrontendError::InvalidForm(format!("missing file name for file: {:?}", field))
+        })?
+        .to_string();
+
+    let body_with_err = field.map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err));
+
+    let (file_url, file_type) = uploads::upload_file(
+        body_with_err,
+        &state.uploads_path,
+        None, // unique id per file upload
+        &file_name,
+    )
+    .await
+    .map_err(FrontendError::InternalError)?;
+
+    let (upload_id, trx) = database::uploads::add_upload_and_continue(
+        &state.db,
+        &user.id,
+        Some(roomid),
+        Some(file_name.clone()),
+        Some(file_url.clone()),
+    )
+    .await
+    .map_err(FrontendError::InternalError)?;
+
+    trx.commit()
+        .await
+        .map_err(|e| FrontendError::InternalError(e.into()))?;
+
+    println!("file_type: {}", file_type);
+
+    let output = state.templates.render_template(
+        "components/uploaded-file.jinja2",
+        context! { path => file_url, file_type => file_type, upload_id => upload_id },
+    )?;
+
+    Ok(Html(output))
+}
+
+#[debug_handler]
 async fn handle_update_user_image(
     jar: CookieJar,
     State(state): State<Arc<FrontendState>>,
@@ -528,7 +609,7 @@ async fn handle_update_user_image(
 
     let body_with_err = field.map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err));
 
-    let file_url = uploads::upload_file(
+    let (file_url, _) = uploads::upload_file(
         body_with_err,
         &state.uploads_path,
         Some(user.id.clone()),
@@ -602,7 +683,7 @@ async fn handle_registration(
                 let body_with_err =
                     field.map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err));
 
-                let path = uploads::upload_file(
+                let (path, _) = uploads::upload_file(
                     body_with_err,
                     &state.uploads_path,
                     Some(user_id.clone()),

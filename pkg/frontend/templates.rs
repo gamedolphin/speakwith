@@ -18,11 +18,18 @@ pub struct Templates {
     _watcher: Arc<RecommendedWatcher>,
 }
 
+fn split(val: String) -> Result<Vec<String>, minijinja::Error> {
+    let out = val.split("||").map(|v| v.into()).collect::<Vec<String>>();
+
+    Ok(out)
+}
+
 impl Default for Templates {
     fn default() -> Self {
         let mut env = Environment::new();
         minijinja_contrib::add_to_environment(&mut env);
         env.set_loader(embedded_loader);
+        env.add_filter("split", split);
 
         let env = Arc::new(RwLock::new(env));
 

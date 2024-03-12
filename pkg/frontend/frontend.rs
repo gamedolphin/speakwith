@@ -216,6 +216,8 @@ async fn room_handler(
         .await
         .map_err(FrontendError::InternalError)?;
 
+    dbg!(&messages);
+
     let page = if messages.len() < database::messages::MAX_FETCH as usize {
         0
     } else {

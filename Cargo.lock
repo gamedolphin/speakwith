@@ -2480,6 +2480,7 @@ dependencies = [
  "anyhow",
  "database",
  "futures",
+ "mime_guess",
  "parking_lot",
  "serde",
  "thiserror",

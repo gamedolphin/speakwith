@@ -62,13 +62,21 @@ impl Manager {
         user_name: &str,
         user_image: Option<String>,
         message: &str,
+        uploads: Vec<String>,
     ) -> Result<()> {
-        let id = database::messages::send_message(&self.db, room_id, user_id, message).await?;
+        let id =
+            database::messages::send_message(&self.db, room_id, user_id, message, &uploads).await?;
 
         let rooms = self.rooms.read();
         let room = rooms
             .get(room_id)
             .ok_or_else(|| ChatRoomErrors::RoomEmpty(room_id.to_string()))?;
+
+        let uploads = if uploads.is_empty() {
+            None
+        } else {
+            Some(uploads.join(","))
+        };
 
         let obj = ChatMessage {
             id,
@@ -78,6 +86,7 @@ impl Manager {
             user_image,
             created_at: OffsetDateTime::now_utc(),
             message: message.to_string(),
+            uploads,
         };
 
         room.sender.send(obj)?;
